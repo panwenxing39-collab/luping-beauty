@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<!-- 声明这是 HTML5 网页，让浏览器按最新标准渲染 -->
+<html lang="zh-CN">
+<!-- 表示网页内容是简体中文 -->
+
+<head>
+  <!-- head 存放"看不见"的配置：编码、标题、样式 -->
+
+  <meta charset="UTF-8">
+  <!-- 文字编码 UTF-8，防止中文变乱码 -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <!-- 适配手机屏幕宽度，禁止手动缩放，保证手机显示正常 -->
+
+  <title>陆萍小姐姐 · 世界上最美的小姐姐</title>
+  <!-- 网页标题，显示在浏览器标签页上 -->
+
+  <style>
+    /* CSS 样式区：负责给页面"化妆" */
+
+    /* ===== 全局基础设置 ===== */
+    * {
+      margin: 0;              /* 清除默认外边距 */
+      padding: 0;             /* 清除默认内边距 */
+      box-sizing: border-box; /* 宽高计算包含边框内边距，防止排版溢出 */
+    }
+
+    html, body {
+      width: 100%;            /* 占满屏幕宽度 */
+      min-height: 100%;       /* 至少占满屏幕高度 */
+      font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      /* 优先用苹果/微软的中文圆润字体 */
+      overflow-x: hidden;     /* 藏掉横向滚动条，页面不会左右晃 */
+    }
+
+    body {
+      /* 背景：深夜蓝渐变到玫瑰粉，像黄昏后刚亮灯的城市天空 */
+      background: linear-gradient(160deg, #0f1b3d 0%, #2b1a52 40%, #6d2a6f 70%, #c9437f 100%);
+      color: #fff;            /* 全局文字白色 */
+      position: relative;     /* 作为爱心星星动画的"舞台参照物" */
+      min-height: 100vh;      /* 100vh = 整块屏幕的高度 */
+      padding: 24px 16px 60px;/* 内边距：防内容贴边 */
+    }
+
+    /* ===== 漂浮爱心的样式 ===== */
+    .heart {
+      position: fixed;        /* 固定定位：以屏幕为参照，不随滚动 */
+      bottom: -40px;          /* 出生在屏幕底边外，等动画带它起飞 */
+      font-size: 20px;
+      color: #ff8fb1;
+      opacity: 0;             /* 初始全透明 */
+      animation: floatUp 8s linear infinite; /* 引用 floatUp 剧本：8秒一轮，无限循环 */
+      pointer-events: none;   /* 爱心不挡手指点击 */
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      /* 爱心从底部飘到顶部的完整动作剧本 */
+      0%   { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+      10%  { opacity: 0.8; }                                    /* 飘起后现身 */
+      50%  { transform: translateY(-50vh) rotate(20deg) scale(1.2); }
+      90%  { opacity: 0.6; }                                    /* 快结束渐渐隐身 */
+      100% { transform: translateY(-110vh) rotate(-15deg) scale(0.9); opacity: 0; }
+    }
+
+    /* ===== 背景小星星 ===== */
+    .star {
+      position: fixed;
+      border-radius: 50%;     /* 圆角拉满 = 圆形 */
+      background: #ffe9a8;    /* 暖黄星光 */
+      animation: twinkle 3s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes twinkle {
+      /* 一闪一闪亮晶晶：又小又暗 -> 又大又亮 */
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50%      { opacity: 1;   transform: scale(1.6); }
+    }
+
+    /* ===== 偶尔划过的流星 ===== */
+    .meteor {
+      position: fixed;                 /* 固定在屏幕上 */
+      width: 120px;                    /* 流星"尾巴"长度 */
+      height: 2px;                     /* 很细的一条 */
+      background: linear-gradient(90deg, rgba(255,255,255,0), #fff);
+      /* 尾巴渐变：从透明到亮白，像拖出的光 */
+      border-radius: 2px;
+      transform: rotate(-35deg);       /* 斜着飞 */
+      animation: shoot 2.5s ease-in forwards; /* 只飞一次 */
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes shoot {
+      /* 流星划过夜空的剧本：快速斜穿一段距离，同时淡出 */
+      0%   { transform: translate(0, 0) rotate(-35deg); opacity: 1; }
+      70%  { opacity: 1; }
+      100% { transform: translate(-320px, 220px) rotate(-35deg); opacity: 0; }
+    }
+
+    /* ===== 主内容区 ===== */
+    .container {
+      position: relative;
+      z-index: 2;             /* 在星星爱心之上，保证文字清晰 */
+      max-width: 480px;       /* 手机舒适宽度 */
+      margin: 0 auto;         /* 水平居中 */
+      text-align: center;     /* 文字居中 */
+    }
+
+    .top-tip {
+      font-size: 13px;
+      letter-spacing: 6px;    /* 字间距拉开，精致感 */
+      color: #ffd9e8;
+      margin-bottom: 22px;
+      animation: fadeDown 1.2s ease-out; /* 从上滑入 */
+    }
+
+    /* ===== 大标题：她的名字 ===== */
+    h1.name-title {
+      font-size: 36px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #ffe3ec, #ffb3c9, #ff7fa9, #ffc9dc);
+      -webkit-background-clip: text; /* 渐变只涂在文字上 */
+      background-clip: text;
+      color: transparent;            /* 文字透明露出渐变 */
+      margin-bottom: 14px;
+      animation: fadeUp 1.4s ease-out;
+      text-shadow: 0 0 24px rgba(255, 131, 173, 0.55); /* 粉色光晕 */
+    }
+
+    /* ===== 那句"世界上最美"的大字宣言 ===== */
+    .beauty-claim {
+      font-size: 22px;               /* 够大，一眼看到 */
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 2px;
+      margin-bottom: 34px;
+      animation: glowBreath 2.4s ease-in-out infinite; /* 呼吸发光，一直在强调 */
+    }
+
+    @keyframes glowBreath {
+      /* "呼吸灯"剧本：光晕一强一弱，像这句话在不断被强调 */
+      0%, 100% { text-shadow: 0 0 8px rgba(255, 170, 200, 0.35); }
+      50%      { text-shadow: 0 0 26px rgba(255, 170, 200, 0.95); }
+    }
+
+    /* ===== 最美认证卡 ===== */
+    .letter {
+      background: rgba(255, 255, 255, 0.1);  /* 半透明白，磨砂玻璃感 */
+      backdrop-filter: blur(10px);           /* 毛玻璃模糊（苹果手机效果最佳） */
+      -webkit-backdrop-filter: blur(10px);   /* 兼容写法 */
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 26px 20px;
+      margin-bottom: 22px;
+      animation: fadeUp 1.8s ease-out;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); /* 悬浮阴影 */
+    }
+
+    .letter p {
+      font-size: 15px;
+      line-height: 1.9;                      /* 行高舒适 */
+      color: rgba(255, 255, 255, 0.92);
+      margin-bottom: 12px;
+    }
+
+    .letter p:last-child { margin-bottom: 0; }
+
+    .letter .highlight {
+      color: #ffd9e8;
+      font-weight: 600;
+    }
+
+    /* ===== 区块通用标题 ===== */
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffe3ee;
+      letter-spacing: 2px;
+      margin: 22px 0 14px;
+      animation: fadeUp 2s ease-out;
+    }
+
+    /* ===== 认证数据卡片（夸她的小卡片） ===== */
+    .promise-card {
+      display: flex;
+      align-items: center;                   /* 图标文字垂直居中 */
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      text-align: left;
+      animation: fadeUp 2.2s ease-out;
+      transition: transform 0.3s ease;
+    }
+
+    .promise-card:active {
+      transform: scale(0.96);                /* 按下时轻微缩小，有反馈感 */
+    }
+
+    .promise-icon {
+      font-size: 26px;
+      margin-right: 14px;
+      flex-shrink: 0;                        /* 图标不被挤变形 */
+    }
+
+    .promise-text {
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .promise-text b {
+      color: #ffd9e8;                        /* 关键词亮粉加粗 */
+    }
+
+    /* ===== 好好吃饭"场景"卡片：一日三餐小餐桌 ===== */
+    .meal-scene {
+      background: rgba(255, 255, 255, 0.1);  /* 比普通卡片更亮，突出这个场景 */
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      padding: 20px 16px;
+      margin-bottom: 12px;
+      text-align: left;
+      animation: fadeUp 2.4s ease-out;
+    }
+
+    .meal-scene-title {
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffe3ee;
+      margin-bottom: 14px;
+    }
+
+    /* 三餐表格：用网格把"早中晚"排成小时刻表 */
+    .meal-row {
+      display: flex;                         /* 左右两栏：时间 + 菜 */
+      align-items: center;
+      padding: 10px 6px;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.2); /* 虚线分隔，像菜单 */
+    }
+
+    .meal-row:last-child { border-bottom: none; }
+
+    .meal-time {
+      font-size: 13px;
+      color: #ffb3c9;                        /* 餐点时间用粉色 */
+      font-weight: 700;
+      width: 92px;                           /* 固定宽度，时间对齐 */
+      flex-shrink: 0;
+    }
+
+    .meal-food {
+      font-size: 14px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .meal-note {
+      text-align: center;
+      font-size: 13px;
+      color: #ffd9e8;
+      margin-top: 12px;
+    }
+
+    /* ===== 底部签名 ===== */
+    .signature {
+      margin-top: 28px;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.55);
+      letter-spacing: 2px;
+      animation: fadeUp 2.6s ease-out;
+    }
+
+    .signature .heart-beat {
+      display: inline-block;
+      animation: heartbeat 1.2s ease-in-out infinite; /* 爱心持续扑通 */
+      color: #ff8fb1;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      25%      { transform: scale(1.3); }
+      50%      { transform: scale(1); }
+      75%      { transform: scale(1.2); }
+    }
+
+    /* ===== 入场动画剧本 ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); } /* 从下方浮入 */
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); } /* 从上方滑入 */
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== 点击屏幕弹出的爱心 ===== */
+    .pop-heart {
+      position: fixed;
+      font-size: 24px;
+      pointer-events: none;
+      animation: popOut 1s ease-out forwards; /* 弹出一次即消失 */
+      z-index: 99;
+    }
+
+    @keyframes popOut {
+      0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 1; } /* 手指处冒出 */
+      100% { transform: translate(-50%, -180px) scale(1.4); opacity: 0; } /* 飘高消散 */
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 页面上看得见的内容都在 body 里 -->
+
+  <script>
+    // ===== 第一部分：满天漂浮的爱心 =====
+
+    // 爱心符号池，随机取用不重样
+    var heartSymbols = ['❤', '💕', '💖', '💗', '💘', '🌸'];
+
+    // 每 900 毫秒造一颗新爱心
+    setInterval(function () {
+      var heart = document.createElement('div'); // 造个小盒子
+      heart.className = 'heart';                 // 命名，让 CSS 找到它
+      heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+      heart.style.left = Math.random() * 100 + 'vw';       // 随机横向出生点
+      heart.style.animationDuration = (6 + Math.random() * 4) + 's'; // 飘行6~10秒
+      heart.style.fontSize = (16 + Math.random() * 14) + 'px';       // 随机大小
+      heart.style.opacity = 0;
+      document.body.appendChild(heart);          // 挂上页面
+      setTimeout(function () { heart.remove(); }, 11000); // 播完自动清理防卡顿
+    }, 900);
+
+    // ===== 第二部分：一闪一闪的背景星星 =====
+
+    for (var i = 0; i < 25; i++) {               // 一次铺 25 颗
+      var star = document.createElement('div');
+      star.className = 'star';
+      var size = 2 + Math.random() * 3;          // 2~5px 小圆点
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.animationDuration = (1.5 + Math.random() * 2.5) + 's'; // 各闪各的
+      star.style.animationDelay = Math.random() * 3 + 's';              // 错开出场
+      document.body.appendChild(star);
+    }
+
+    // ===== 第三部分：每 6 秒左右划过一颗流星 =====
+
+    setInterval(function () {
+      var meteor = document.createElement('div'); // 造一颗流星
+      meteor.className = 'meteor';
+      meteor.style.top = (5 + Math.random() * 40) + 'vh';  // 随机高度出发
+      meteor.style.left = (40 + Math.random() * 55) + 'vw';// 从偏右侧天空出发
+      document.body.appendChild(meteor);
+      setTimeout(function () { meteor.remove(); }, 2600);  // 飞完即删
+    }, 6000);
+
+    // ===== 第四部分：点击屏幕任意处弹出爱心 =====
+
+    document.addEventListener('click', function (e) {
+      var pop = document.createElement('div');
+      pop.className = 'pop-heart';
+      pop.textContent = '💖';
+      pop.style.left = e.clientX + 'px';   // 在手指位置冒出
+      pop.style.top = e.clientY + 'px';
+      document.body.appendChild(pop);
+      setTimeout(function () { pop.remove(); }, 1000);
+    });
+  </script>
+
+  <!-- ===== 主内容区开始 ===== -->
+  <div class="container">
+
+    <!-- 顶部小字 -->
+    <div class="top-tip">✦ 朋友圈限定 · 今日最美 ✦</div>
+
+    <!-- 她的名字 -->
+    <h1 class="name-title">陆萍小姐姐</h1>
+
+    <!-- 要求的大字宣言：呼吸发光，一直被强调 -->
+    <div class="beauty-claim">是世界上最美的小姐姐 ✨</div>
+
+    <!-- 最美认证卡 -->
+    <div class="letter">
+      <p>本页由<span class="highlight">「宇宙审美局」</span>权威认证：</p>
+      <p>陆萍小姐姐，颜值严重超标，笑容甜度爆表，<span class="highlight">可爱程度已超出测量范围</span>。</p>
+      <p>经反复核查，"世界上最美"这个头衔，非她莫属。</p>
+    </div>
+
+    <!-- 认证数据区标题 -->
+    <div class="section-title">🏆 官方认证数据 🏆</div>
+
+    <!-- 数据一：颜值 -->
+    <div class="promise-card">
+      <div class="promise-icon">💖</div>
+      <div class="promise-text"><b>颜值：100 分</b>，常年在线，从未掉线。<br>见过的人都说好，回头率遥遥领先。</div>
+    </div>
+
+    <!-- 数据二：可爱 -->
+    <div class="promise-card">
+      <div class="promise-icon">🌸</div>
+      <div class="promise-text"><b>可爱：严重超标</b>，超出仪器测量上限。<br>请各位朋友谨慎围观，容易上头。</div>
+    </div>
+
+    <!-- 数据三：气质 -->
+    <div class="promise-card">
+      <div class="promise-icon">✨</div>
+      <div class="promise-text"><b>气质：满分认证</b>，走到哪里都是氛围感担当。<br>朋友圈有此美女，实属荣幸。</div>
+    </div>
+
+    <!-- 好好吃饭场景卡 -->
+    <div class="meal-scene">
+      <div class="meal-scene-title">🍚 陆萍小姐姐的一日三餐时刻表</div>
+
+      <!-- 早餐行 -->
+      <div class="meal-row">
+        <div class="meal-time">☀ 早餐 8:00</div>
+        <div class="meal-food">热乎的豆浆包子，一天元气满满</div>
+      </div>
+      <!-- 午餐行 -->
+      <div class="meal-row">
+        <div class="meal-time">🍜 午餐 12:00</div>
+        <div class="meal-food">正经吃顿好的，别拿零食糊弄自己</div>
+      </div>
+      <!-- 晚餐行 -->
+      <div class="meal-row">
+        <div class="meal-time">🌙 晚餐 18:30</div>
+        <div class="meal-food">吃七分饱就好，睡前不再加餐</div>
+      </div>
+
+      <div class="meal-note">一日三餐按时吃，<b style="color:#fff">元气满满才是最美的样子</b> 🌟</div>
+    </div>
+
+    <!-- 底部签名 -->
+    <div class="signature">
+      本页长期有效，夸夸永不过期 <span class="heart-beat">❤</span><br>
+      —— 世界上最美的陆萍小姐姐，值得被所有人看见 ——
+    </div>
+
+  </div>
+  <!-- ===== 主内容区结束 ===== -->
+
+</body>
+</html>
